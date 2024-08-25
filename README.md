@@ -1,1 +1,42 @@
-# aus_lab_test
+# Images
+
+- https://packetfire.org/post/intro-to-bgp/
+- https://containerlab.dev/manual/kinds/ceos/
+- https://containerlab.dev/manual/kinds/vr-vmx/
+
+```bash
+docker pull ubuntu:22.04
+docker pull quay.io/frrouting/frr:10.1.0
+
+docker pull ghcr.io/openconfig/gnmic:0.38.2
+docker pull quay.io/prometheus/prometheus:v2.54.0
+docker pull grafana/grafana:11.1.4
+```
+
+# Containerlab
+- https://containerlab.dev/install/#quick-setup
+
+```bash
+curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
+```
+
+# linux bridge
+```bash
+sudo ip link add br-clab type bridge
+sudo ip link set dev br-clab up
+```
+
+# Build
+## birdc
+- https://bird.network.cz/?get_doc&v=20&f=bird-6.html#ss6.4
+
+```bash
+cd birdc && docker build -t birdc:2.15.1 .
+```
+
+## gnmic
+examples
+```bash
+./gnmic sub -a 192.168.0.1:57400 --mode stream --stream-mode sample --insecure -u admin -p admin@123 --format prototext --debug --path /network-instances/network-instance/protocols/protocol/bgp/global/state
+./gnmic sub -a 192.168.0.1:57400 --mode once --stream-mode sample --insecure -u admin -p admin@123 --format prototext --debug --path /network-instances/
+```

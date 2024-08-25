@@ -1,0 +1,50 @@
+username: admin
+password: admin@123
+insecure: true
+encoding: proto
+log-file: /app/gnmic.log
+debug:    true
+log:      true
+
+targets:
+  192.168.0.1:57400:
+
+subscriptions:
+  sub_junos_health:
+    paths:
+      - /junos/services/health-monitor/data/
+      - /junos/task-memory-information/
+      - /system/cpus/
+      - /system/processes/
+    stream-mode: sample
+    sample-interval: 15s
+  sub_junos_bgp:
+    paths:
+      - /network-instances/network-instance/protocols/protocol/bgp/global/state
+      - /network-instances/network-instance/protocols/protocol/bgp/global/afi-safis/afi-safi/state
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/
+      - /network-instances/network-instance/protocols/protocol/bgp/peer-groups/peer-group/state
+      - /network-instances/network-instance/protocols/protocol/bgp/peer-groups/peer-group/afi-safis/afi-safi/state
+    stream-mode: sample
+    sample-interval: 15s
+  sub_junos_other:
+    paths:
+      - /junos/kernel-ifstate
+    stream-mode: sample
+    sample-interval: 15s
+
+outputs:
+  prom-output:
+    type: prometheus
+    listen: :9804
+    path: /metrics
+    strings-as-labels: true
+    event-processors:
+      - group-by-source
+
+processors:
+  group-by-source:
+    event-group-by:
+      tags:
+        - source

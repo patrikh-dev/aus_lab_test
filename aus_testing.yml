@@ -1,0 +1,99 @@
+name: aus_testing
+
+topology:
+  kinds:
+    vr-vmx:
+      image: vrnetlab/vr-vmx:20.4R3-S5.4
+
+  nodes:
+    br-clab:
+      kind: bridge
+
+#    edge01:
+#      kind: vr-vmx
+#      mgmt-ipv4: 172.20.20.2
+#      mgmt-ipv6: 2001:172:20:20::2
+#      startup-config: vmx/edge01.txt
+
+    bird01:
+      kind: linux
+      image: birdc:2.15.1
+      mgmt-ipv4: 172.20.20.3
+      mgmt-ipv6: 2001:172:20:20::3
+      exec:
+        - "ip addr flush eth1"
+        - "ip link set mtu 1500 dev eth1"
+        - "ip -4 addr add 192.168.0.3/24 dev eth1"
+        - "ip -6 addr add 2001:db8:172::3/64 dev eth1"
+
+    exabgp01:
+      kind: linux
+      image: exabgp:4.2.22
+      mgmt-ipv4: 172.20.20.4
+      mgmt-ipv6: 2001:172:20:20::4
+      binds:
+        - ./exabgp/???:???
+      exec:
+        - "ip addr flush eth1"
+        - "ip link set mtu 1500 dev eth1"
+        - "ip -4 addr add 192.168.0.4/24 dev eth1"
+        - "ip -6 addr add 2001:db8:172::4/64 dev eth1"
+
+    frr01:
+      kind: linux
+      image: quay.io/frrouting/frr:10.1.0
+      mgmt-ipv4: 172.20.20.5
+      mgmt-ipv6: 2001:172:20:20::5
+      binds:
+        - ./frr/daemons:/etc/frr/daemons
+        - ./frr/frr.conf:/etc/frr/frr.conf
+        - ./frr/vtysh.conf:/etc/frr/vtysh.conf
+      exec:
+        - "ip addr flush eth1"
+        - "ip link set mtu 1500 dev eth1"
+        - "ip -4 addr add 192.168.0.5/24 dev eth1"
+        - "ip -6 addr add 2001:db8:172::5/64 dev eth1"
+
+#    gnmic01:
+#      kind: linux
+#      image: ghcr.io/openconfig/gnmic:0.38.2
+#      mgmt-ipv4: 172.20.20.6
+#      mgmt-ipv6: 2001:172:20:20::6
+#      cmd: "--config /app/gnmic.yaml --log subscribe"
+#      binds:
+#        - ./gnmic/gnmic.yaml:/app/gnmic.yaml
+#      exec:
+#        - "ip addr flush eth1"
+#        - "ip link set mtu 1500 dev eth1"
+#        - "ip -4 addr add 192.168.0.6/24 dev eth1"
+#        - "ip -6 addr add 2001:db8:172::6/64 dev eth1"
+
+#    prom01:
+#      kind: linux
+#      image: quay.io/prometheus/prometheus:v2.54.0
+#      mgmt-ipv4: 172.20.20.6
+#      mgmt-ipv6: 2001:172:20:20::6
+#      binds:
+#        - ./prometheus/:/etc/prometheus/
+#      cmd: |
+#        --config.file=/etc/prometheus/prometheus.yaml
+#        --web.console.libraries=/usr/share/prometheus/console_libraries
+#        --web.console.templates=/usr/share/prometheus/consoles
+#        --storage.tsdb.path /var/lib/prometheus/
+#        --storage.tsdb.retention.time=1w
+#
+#    graf01:
+#      kind: linux
+#      image: grafana/grafana:11.1.4
+#      mgmt-ipv4: 172.20.20.7
+#      mgmt-ipv6: 2001:172:20:20::7
+#      binds:
+#        - grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+#        #- grafana/dashboards/:/var/lib/grafana/dashboards
+
+  links:
+#    - endpoints: ["edge01:eth1", "br-clab:eth1"]
+    - endpoints: ["bird01:eth1", "br-clab:eth2"]
+    - endpoints: ["exabgp01:eth1", "br-clab:eth3"]
+    - endpoints: ["frr01:eth1", "br-clab:eth4"]
+#    - endpoints: ["gnmic01:eth1", "br-clab:eth5"]
