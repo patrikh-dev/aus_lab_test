@@ -1,9 +1,5 @@
 # Images
 
-- https://packetfire.org/post/intro-to-bgp/
-- https://containerlab.dev/manual/kinds/ceos/
-- https://containerlab.dev/manual/kinds/vr-vmx/
-
 ```bash
 docker pull ubuntu:22.04
 docker pull quay.io/frrouting/frr:10.1.0
@@ -40,3 +36,14 @@ examples
 ./gnmic sub -a 192.168.0.1:57400 --mode stream --stream-mode sample --insecure -u admin -p admin@123 --format prototext --debug --path /network-instances/network-instance/protocols/protocol/bgp/global/state
 ./gnmic sub -a 192.168.0.1:57400 --mode once --stream-mode sample --insecure -u admin -p admin@123 --format prototext --debug --path /network-instances/
 ```
+
+# Resources
+- https://bird.network.cz/?get_doc&v=20&f=bird-6.html#ss6.4
+  - https://packetfire.org/post/intro-to-bgp/
+- https://containerlab.dev/manual/kinds/vr-vmx/
+- https://github.com/Exa-Networks/exabgp
+  - https://thepacketgeek.com/exabgp/
+  - https://juliopdx.com/2022/02/25/exabgp-in-the-lab/
+- https://docs.frrouting.org/en/latest/bgp.html
+- https://gnmic.openconfig.net/
+  - https://github.com/openconfig/gnmic/tree/main/examples/deployments
