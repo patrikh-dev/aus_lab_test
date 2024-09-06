@@ -40,10 +40,17 @@ examples
 # Resources
 - https://bird.network.cz/?get_doc&v=20&f=bird-6.html#ss6.4
   - https://packetfire.org/post/intro-to-bgp/
+  - https://mellowd.dev/posts/migrating-bird-to-bird2/
+  - https://mellowd.dev/posts/migrating-bird-to-bird2-part2/
+  - https://mellowd.dev/posts/migrating-bird-to-bird2-part3/
+  - https://mellowd.dev/posts/rpkiserver-for-12c-a-year/
+  - https://dn42.eu/howto/Bird2
+  - https://docs.netx.as/tutorials/bgp/basic-bgp.html
 - https://containerlab.dev/manual/kinds/vr-vmx/
 - https://github.com/Exa-Networks/exabgp
   - https://thepacketgeek.com/exabgp/
   - https://juliopdx.com/2022/02/25/exabgp-in-the-lab/
+  - https://jasonmurray.org/posts/2020/exabgp-fulltable/
 - https://docs.frrouting.org/en/latest/bgp.html
 - https://gnmic.openconfig.net/
   - https://github.com/openconfig/gnmic/tree/main/examples/deployments
