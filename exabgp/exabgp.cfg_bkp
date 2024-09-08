@@ -1,0 +1,40 @@
+process announce-routes {
+    run python3 bgp.py;
+    encoder json;
+}
+
+template {
+    neighbor TRANSITv4 {
+        router-id 192.168.0.4;
+        local-as 65004;
+        local-address 192.168.0.4;
+    }
+}
+
+template {
+    neighbor TRANSITv6 {
+        router-id 192.168.0.4;
+        local-as 65004;
+        local-address 2001:db8:172::4;
+    }
+}
+
+neighbor 192.168.0.3 {
+    inherit TRANSITv4;
+    peer-as 65003;
+}
+
+neighbor 192.168.0.5 {
+    inherit TRANSITv4;
+    peer-as 65005;
+}
+
+neighbor 2001:db8:172::3 {
+    inherit TRANSITv6;
+    peer-as 65003;
+}
+
+neighbor 2001:db8:172::5 {
+    inherit TRANSITv6;
+    peer-as 65005;
+}

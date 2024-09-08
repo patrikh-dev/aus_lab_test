@@ -1,27 +1,14 @@
-FROM python:3-alpine
+FROM ubuntu:22.04
 
-LABEL BASEDON="https://git.dartmouth.edu/d41259m/exabgplab"
-LABEL AUTHOR="@patrikh"
+RUN apt update && \
+    apt -y install python3-pip net-tools wget mrtparse vim && \
+    rm -rf /var/lib/apt/lists/* && apt clean
 
-RUN pip install --upgrade pip
-RUN pip install exabgp
+RUN pip3 install --upgrade pip && \
+    pip3 install exabgp==4.2.22
 
-# https://www.howtoforge.com/linux-mkfifo-command/
-RUN mkfifo /run/exabgp.in && \
-    mkfifo /run/exabgp.out && \
-    chmod 666 /run/exabgp.in && \
-    chmod 666 /run/exabgp.out
+COPY exabgp.cfg /etc/exabgp/exabgp.cfg
 
-#RUN exabgp --fi > /usr/local/etc/exabgp/exabgp.env
+COPY bgp.py /etc/exabgp/bgp.py
 
-COPY exabgp.env /usr/local/etc/exabgp/exabgp.env
-
-COPY exabgp.conf /etc/exabgp.conf
-
-COPY start.sh /start.sh
-
-COPY print.py /handlers/print.py
-
-RUN chmod 777 /start.sh
-
-CMD ["/start.sh"]
+#ENTRYPOINT "exabgp -f /etc/exabgp/exabgp.cfg"

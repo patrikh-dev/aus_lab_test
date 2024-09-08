@@ -46,6 +46,10 @@ examples
   - https://mellowd.dev/posts/rpkiserver-for-12c-a-year/
   - https://dn42.eu/howto/Bird2
   - https://docs.netx.as/tutorials/bgp/basic-bgp.html
+  - https://ipng.ch/s/articles/2021/06/28/launch-of-as112/
+  - https://blog.fhrnet.eu/2021/02/25/bird-1-6-the-unofficial-guide/
+  - https://github.com/packethost/network-helpers/blob/master/routers/bird/README.md
+  - https://docs.cilium.io/en/v1.9/gettingstarted/bird/
 - https://containerlab.dev/manual/kinds/vr-vmx/
 - https://github.com/Exa-Networks/exabgp
   - https://thepacketgeek.com/exabgp/
@@ -54,3 +58,4 @@ examples
 - https://docs.frrouting.org/en/latest/bgp.html
 - https://gnmic.openconfig.net/
   - https://github.com/openconfig/gnmic/tree/main/examples/deployments
+- https://lukasz.bromirski.net/post/bgp-w-labie-3/
